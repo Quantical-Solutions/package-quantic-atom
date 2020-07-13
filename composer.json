@@ -2,8 +2,8 @@
   "name": "quantic/atom",
   "type": "library",
   "description": "Quantic Framework atom for console and shell commands",
-  "keywords": ["quantic","igniter"],
-  "homepage": "https://github.com/Quantical-Solutions/package-quantic-igniter",
+  "keywords": ["quantic","atom"],
+  "homepage": "https://github.com/Quantical-Solutions/package-quantic-atom",
   "license": "MIT",
   "authors": [
     {

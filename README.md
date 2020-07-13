@@ -1,2 +1,2 @@
 # package-quantic-atom
-Quantic Atom package
+Quantic Atom PHP Package
