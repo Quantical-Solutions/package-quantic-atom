@@ -1,0 +1,31 @@
+{
+  "name": "quantic/atom",
+  "type": "library",
+  "description": "Quantic Framework atom for console and shell commands",
+  "keywords": ["quantic","igniter"],
+  "homepage": "https://github.com/Quantical-Solutions/package-quantic-igniter",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Frédéric Geffray",
+      "email": "in-touch-fg@quanticalsolutions.com",
+      "homepage": "https://quanticalsolutions.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=7.3.0",
+    "ext-json": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Quantic\\Atom\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Quantic\\Atom\\Tests": "tests/"
+    }
+  },
+  "minimum-stability": "stable"
+}
