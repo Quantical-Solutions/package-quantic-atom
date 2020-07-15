@@ -15,12 +15,10 @@ class Console
     private static function ListenShellCommands($argv, $argc)
     {
         self::$control = $argc;
-
         self::$method = '';
         self::$subject = '';
         self::$arg = '';
     }
-
 
     private static function TranslateCommand()
     {
@@ -31,7 +29,8 @@ class Console
             self::$control
         ];
 
-        $translate = Expansion::StellarPlan($commands);
+        $checkSyntax = Singularities::ScopeFixer($commands);
+        $translate = ($checkSyntax) ? Expansion::StellarPlan($commands) : false;
         return $translate;
     }
 
