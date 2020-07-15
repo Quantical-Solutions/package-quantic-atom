@@ -29,8 +29,7 @@ require __DIR__.'/vendor/autoload.php';
 
 use Quantic\Atom\Shell\Console;
 $response = Console::ExecuteCommand();
-
-echo $response . PHP_EOL;
+$status = Console::StatusCommand($response);
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +42,5 @@ echo $response . PHP_EOL;
 |
 */
 
-/*$kernel->terminate($input, $status);
-
-exit($status);*/
+Console::TerminateCommand($status);
+exit($status);

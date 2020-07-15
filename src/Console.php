@@ -3,6 +3,7 @@
 namespace Quantic\Atom\Shell;
 
 use Quantic\Atom\Shell\Expansion;
+use Quantic\Atom\Shell\Singularities;
 
 class Console
 {
@@ -40,6 +41,16 @@ class Console
         $argc = $_SERVER['argc'];
         self::ListenShellCommands($argv, $argc);
         $response = self::TranslateCommand();
-        return $response;
+        echo $response . PHP_EOL;
+    }
+
+    public static function StatusCommand($response)
+    {
+        echo 'Status' . PHP_EOL;
+    }
+
+    public static function TerminateCommand($status)
+    {
+        echo 'Terminate' . PHP_EOL;
     }
 }
