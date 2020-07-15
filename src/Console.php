@@ -13,10 +13,11 @@ class Console
 
     private static function ListenShellCommands($argv, $argc)
     {
+        self::$control = $argc;
+
         self::$method = '';
         self::$subject = '';
         self::$arg = '';
-        self::$control = $argc;
     }
 
 
@@ -33,8 +34,10 @@ class Console
         return $translate;
     }
 
-    public static function ExecuteCommand($argv, $argc)
+    public static function ExecuteCommand()
     {
+        $argv = $_SERVER['argv'];
+        $argc = $_SERVER['argc'];
         self::ListenShellCommands($argv, $argc);
         $response = self::TranslateCommand();
         return $response;

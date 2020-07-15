@@ -28,7 +28,7 @@ require __DIR__.'/vendor/autoload.php';
 */
 
 use Quantic\Atom\Shell\Console;
-$response = Console::ExecuteCommand($_SERVER['argv'], $_SERVER['argc']);
+$response = Console::ExecuteCommand();
 
 echo $response . PHP_EOL;
 
