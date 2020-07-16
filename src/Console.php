@@ -15,9 +15,9 @@ class Console
     private static function ListenShellCommands($argv, $argc)
     {
         self::$control = $argc;
-        self::$method = '';
-        self::$subject = '';
-        self::$arg = '';
+        self::$method = (isset($argv[1])) ? (strpos($argv[1], ':') !== false) ? explode(':', $argv[1])[0] : $argv[1] : false;
+        self::$subject = (isset($argv[1])) ? (strpos($argv[1], ':') !== false) ? explode(':', $argv[1])[1] : false : false;
+        self::$arg = (isset($argv[2])) ? $argv[2] : false;
     }
 
     private static function TranslateCommand()
@@ -30,7 +30,7 @@ class Console
         ];
 
         $checkSyntax = Singularities::ScopeFixer($commands);
-        $translate = ($checkSyntax) ? Expansion::StellarPlan($commands) : false;
+        $translate = (!is_string($checkSyntax)) ? Expansion::StellarPlan($commands) : $checkSyntax;
         return $translate;
     }
 
