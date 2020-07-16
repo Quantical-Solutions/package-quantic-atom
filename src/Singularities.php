@@ -122,13 +122,14 @@ class Singularities
                 break;
         }
 
-        foreach ($reference as $ref) {
+        foreach ($reference as $key => $ref) {
 
             if (is_array($ref)) {
 
             } else {
 
             }
+            echo $key . ' ' . $ref;
         }
 
         return $mark;
