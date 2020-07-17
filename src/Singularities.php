@@ -8,29 +8,29 @@ class Singularities
 
         // Files creation
         'create' => [
-            'create:controller {string}', // Create Controller file
-            'create:model {string}', // Create Model file
-            'create:migration {string}' // Create Migration file
+            'create:controller', // Create Controller file | {string}
+            'create:model', // Create Model file | {string}
+            'create:migration' // Create Migration file | {string}
         ],
 
         // DB migration
         'expand' => [
             'expand', // Migrate all with "if not exist"
-            'expand|--force', // Migrate all forced with "Replace all"
+            'expand --force', // Migrate all forced with "Replace all"
             'expand:rollback', // Get last migration state
-            'expand:rollback|--step={int}', // Get {int}est previous migration
+            'expand:rollback --step=', // Get n previous migration | n={int}
             'expand:reset', // Truncate Migration table
             'expand:refresh', // Refresh Tables Structure
-            'expand:refresh|--seed', // Refresh Tables structures and populate
+            'expand:refresh --seed', // Refresh Tables structures and populate
             'expand:fresh', // Truncate tables
-            'expand:fresh|--seed' // Truncate tables and populate
+            'expand:fresh --seed' // Truncate tables and populate
         ],
 
         // DB populate
         'db' => [
             'db:seed', // Populate Database with control "if row not exists"
-            'db:seed|--class={string}', // Populate a targeted table with a migration file
-            'db:seed|--force' // Update tables "if row exists" and Insert "if row doesn't exist"
+            'db:seed --class=', // Populate a targeted table with a migration file | class={string}
+            'db:seed --force' // Update tables "if row exists" and Insert "if row doesn't exist"
         ]
     ];
 
@@ -132,70 +132,85 @@ class Singularities
 
     private static function formatControl($method, $reference, $subject, $arg, $control)
     {
-        $missing = ($subject != '') ? $subject : $arg;
-        $mark = 'ERROR : The ' . strtoupper($method) . ' method\'s function "' . $missing . '" doesn\'t exist !' .
-            PHP_EOL . strtoupper($method) . ' functions list :' . PHP_EOL;
+        $arg1 = ($subject != false) ? ':' . $subject : '';
+        $arg2 = ($arg != false) ? ' ' . $arg : '';
 
         switch ($method) {
 
             case 'create':
+
+                $missing = ($subject != false) ? $subject : $arg;
+                $mark = 'ERROR : The CREATE method\'s function "' . $missing . '" doesn\'t exist !' .
+                    PHP_EOL . 'CREATE functions list :' . PHP_EOL;
                 $mark .= '[:controller {string}] [:model {string}] [:migration {string}]' . PHP_EOL;
                 break;
 
             case 'expand':
+
+                $missing = ($subject != false) ? $subject : $arg;
+                $mark = 'ERROR : The EXPAND method\'s function "' . $missing . '" doesn\'t exist !' .
+                    PHP_EOL . 'EXPAND functions list :' . PHP_EOL;
                 $mark .= '[ ] [:rollback [ ] [--step={int}]] [:reset] [:refresh [ ] [--seed]] [:fresh [ ] [--seed]]' . PHP_EOL;
                 break;
 
             case 'db':
+
+                $missing = ($subject != false) ? $subject : $arg;
+                $mark = 'ERROR : The DB method\'s function "' . $missing . '" doesn\'t exist !' .
+                    PHP_EOL . 'DB functions list :' . PHP_EOL;
                 $mark .= '[:seed [ ] [--class={string}] [--force]]' . PHP_EOL;
                 break;
         }
 
-        $arg1 = ($subject != '') ? ':' . $subject : '';
-        $arg2 = ($arg != '') ? $arg : '';
-        $string = '';
-        $int = '';
+        if ($method == 'create') {
 
-        echo $arg2 . PHP_EOL;
+            $verbose = $method . $arg1;
 
-        if (count(explode('=', $arg2)) == 2) {
+            if (in_array($verbose, $reference)) {
 
-            $arg2 = explode('=', $arg2)[0] . ' ' . explode('=', $arg2)[1];
-            $var = explode('=', $arg2)[1];
-            $string = (!is_int(intval($var)));
-            $int = (is_int(intval($var)));
-        }
+                if (!is_numeric(trim($arg2))) {
+                    $mark = true;
+                } else {
+                    $mark = 'ERROR : ' . strtoupper($method) . ' variable must be a "String" type.' . PHP_EOL;
+                }
+            }
 
-        $verbose = $method . $arg1 . $arg2;
+        } else if ($method == 'expand') {
 
-        foreach ($reference as $ref) {
+            $argument = (count(explode('=', $arg2)) == 2) ? explode('=', $arg2)[0] . '=' : $arg2;
+            $var = (isset(explode('=', $arg2)[1])) ? explode('=', $arg2)[1] : '';
+            $verbose = $method . $arg1 . $argument;
 
-            $stringRef = (strpos($ref, '{string}') !== false) ? str_replace('{string}', '', $ref) : $ref;
-            $intRef = (strpos($ref, '{int}') !== false) ? str_replace('{int}', '', $ref) : $ref;
-            $verb = explode('=', $verbose)[0];
+            if (in_array($verbose, $reference)) {
 
-            echo $intRef . PHP_EOL;
-            echo $verb . PHP_EOL;
+                if ($argument == ' --step=' && is_numeric(trim($var))) {
+                    $mark = true;
+                } else if ($argument == ' --step=' && !is_numeric(trim($var))) {
+                    $mark = 'ERROR : ' . strtoupper($method) . ' variable must be a "Int" type.' . PHP_EOL;
+                } else if ($argument == ' --force' || $argument == ' --seed') {
+                    $mark = true;
+                } else if ($argument == '') {
+                    $mark = true;
+                }
+            }
 
-            if ($string && $stringRef == $verb) {
+        } else if ($method == 'db') {
 
-                $mark = true;
+            $argument = (count(explode('=', $arg2)) == 2) ? explode('=', $arg2)[0] . '=' : $arg2;
+            $var = (isset(explode('=', $arg2)[1])) ? explode('=', $arg2)[1] : '';
+            $verbose = $method . $arg1 . $argument;
 
-            } else if ($string && $stringRef != $verb) {
+            if (in_array($verbose, $reference)) {
 
-                $mark = 'ERROR : ' . strtoupper($method) . ' variable must be a "String" type.' . PHP_EOL;
-
-            } else if ($int && $intRef == $verb) {
-
-                $mark = true;
-
-            } else if ($int && $intRef != $verb) {
-
-                $mark = 'ERROR : ' . strtoupper($method) . ' variable must be an "Int" type.' . PHP_EOL;
-
-            } else if ($ref == $verbose) {
-
-                $mark = true;
+                if ($argument == ' --class=' && !is_numeric(trim($var))) {
+                    $mark = true;
+                } else if ($argument == ' --class=' && is_numeric(trim($var))) {
+                    $mark = 'ERROR : ' . strtoupper($method) . ' variable must be a "String" type.' . PHP_EOL;
+                } else if ($argument == ' --force') {
+                    $mark = true;
+                } else if ($argument == '') {
+                    $mark = true;
+                }
             }
         }
 
