@@ -23,10 +23,10 @@ class Console
     private static function TranslateCommand()
     {
         $commands = [
-            self::$method,
-            self::$subject,
-            self::$arg,
-            self::$control
+            'method' => self::$method,
+            'subject' => self::$subject,
+            'arg' => self::$arg,
+            'control' => self::$control
         ];
 
         $checkSyntax = Singularities::ScopeFixer($commands);
