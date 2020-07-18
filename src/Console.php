@@ -19,6 +19,7 @@ class Console
         self::$method = (isset($argv[1])) ? (strpos($argv[1], ':') !== false) ? explode(':', $argv[1])[0] : $argv[1] : false;
         self::$subject = (isset($argv[1])) ? (strpos($argv[1], ':') !== false) ? explode(':', $argv[1])[1] : false : false;
         self::$arg = (isset($argv[2])) ? $argv[2] : false;
+        self::$terminate = '';
     }
 
     private static function TranslateCommand()
@@ -47,7 +48,7 @@ class Console
     public static function StatusCommand($response)
     {
         $status = $response . PHP_EOL;
-        echo $status;
+        echo -e $status;
     }
 
     public static function TerminateCommand()
