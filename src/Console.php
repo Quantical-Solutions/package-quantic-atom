@@ -40,7 +40,7 @@ class Console
         $argc = $_SERVER['argc'];
         self::ListenShellCommands($argv, $argc);
         $response = self::TranslateCommand();
-        echo $response . PHP_EOL;
+        return $response;
     }
 
     public static function StatusCommand($response)

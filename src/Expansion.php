@@ -2,10 +2,14 @@
 
 namespace Quantic\Atom\Shell;
 
+use Quantic\Atom\Shell\Universes\Create;
+use Quantic\Atom\Shell\Universes\Expand;
+use Quantic\Atom\Shell\Universes\Db;
+
 class Expansion
 {
-    public static function StellarPlan()
+    public static function StellarPlan($commands)
     {
-        return 'Stellar is in';
+        return $commands;
     }
 }

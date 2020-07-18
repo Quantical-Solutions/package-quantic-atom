@@ -2,7 +2,7 @@
 
 namespace Quantic\Atom\Shell\Universes;
 
-class DB
+class Db
 {
     public static function Seed($class = false, $force = false)
     {

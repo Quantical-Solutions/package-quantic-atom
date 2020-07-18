@@ -169,8 +169,16 @@ class Singularities
             if (in_array($verbose, $reference)) {
 
                 if (!is_numeric(trim($arg2))) {
-                    $mark = true;
+
+                    $mark = [
+                        'method' => ucwords($method),
+                        'job' => ucwords(str_replace(':', '', $arg1)),
+                        'argument' => '',
+                        'variable' => $arg2
+                    ];
+
                 } else {
+
                     $mark = 'ERROR : ' . strtoupper($method) . ' variable must be a "String" type.' . PHP_EOL;
                 }
             }
@@ -184,13 +192,35 @@ class Singularities
             if (in_array($verbose, $reference)) {
 
                 if ($argument == ' --step=' && is_numeric(trim($var))) {
-                    $mark = true;
+
+                    $mark = [
+                        'method' => ucwords($method),
+                        'job' => ucwords(str_replace(':', '', $arg1)),
+                        'argument' => $argument,
+                        'variable' => $var
+                    ];
+
                 } else if ($argument == ' --step=' && !is_numeric(trim($var))) {
+
                     $mark = 'ERROR : ' . strtoupper($method) . ' variable must be a "Int" type.' . PHP_EOL;
+
                 } else if ($argument == ' --force' || $argument == ' --seed') {
-                    $mark = true;
+
+                    $mark = [
+                        'method' => ucwords($method),
+                        'job' => ucwords(str_replace(':', '', $arg1)),
+                        'argument' => $argument,
+                        'variable' => $var
+                    ];
+
                 } else if ($argument == '') {
-                    $mark = true;
+
+                    $mark = [
+                        'method' => ucwords($method),
+                        'job' => ucwords(str_replace(':', '', $arg1)),
+                        'argument' => $argument,
+                        'variable' => $var
+                    ];
                 }
             }
 
@@ -203,13 +233,34 @@ class Singularities
             if (in_array($verbose, $reference)) {
 
                 if ($argument == ' --class=' && !is_numeric(trim($var))) {
-                    $mark = true;
+
+                    $mark = [
+                        'method' => ucwords($method),
+                        'job' => ucwords(str_replace(':', '', $arg1)),
+                        'argument' => $argument,
+                        'variable' => $var
+                    ];
+
                 } else if ($argument == ' --class=' && is_numeric(trim($var))) {
+
                     $mark = 'ERROR : ' . strtoupper($method) . ' variable must be a "String" type.' . PHP_EOL;
+
                 } else if ($argument == ' --force') {
-                    $mark = true;
+
+                    $mark = [
+                        'method' => ucwords($method),
+                        'job' => ucwords(str_replace(':', '', $arg1)),
+                        'argument' => $argument,
+                        'variable' => $var
+                    ];
                 } else if ($argument == '') {
-                    $mark = true;
+
+                    $mark = [
+                        'method' => ucwords($method),
+                        'job' => ucwords(str_replace(':', '', $arg1)),
+                        'argument' => $argument,
+                        'variable' => $var
+                    ];
                 }
             }
         }
