@@ -191,7 +191,7 @@ class Singularities
 
             if (in_array($verbose, $reference)) {
 
-                if ($argument == ' --step=' && is_numeric(trim($var))) {
+                if ($argument == ' --step=' && $var != '' && is_numeric(trim($var))) {
 
                     $mark = [
                         'method' => ucwords($method),
@@ -200,7 +200,7 @@ class Singularities
                         'variable' => trim($var)
                     ];
 
-                } else if ($argument == ' --step=' && !is_numeric(trim($var))) {
+                } else if ($argument == ' --step=' && (!is_numeric(trim($var)) || $var == '')) {
 
                     $mark = 'ERROR : ' . strtoupper($method) . ' variable must be a "Int" type.' . PHP_EOL;
 
@@ -232,7 +232,7 @@ class Singularities
 
             if (in_array($verbose, $reference)) {
 
-                if ($argument == ' --class=' && !is_numeric(trim($var))) {
+                if ($argument == ' --class=' && $var != '' && !is_numeric(trim($var))) {
 
                     $mark = [
                         'method' => ucwords($method),
@@ -241,7 +241,7 @@ class Singularities
                         'variable' => trim($var)
                     ];
 
-                } else if ($argument == ' --class=' && is_numeric(trim($var))) {
+                } else if ($argument == ' --class=' && (is_numeric(trim($var)) || $var == '')) {
 
                     $mark = 'ERROR : ' . strtoupper($method) . ' variable must be a "String" type.' . PHP_EOL;
 

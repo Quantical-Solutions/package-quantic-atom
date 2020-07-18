@@ -29,7 +29,7 @@ require __DIR__.'/vendor/autoload.php';
 
 use Quantic\Atom\Shell\Console;
 $response = Console::ExecuteCommand();
-$status = Console::StatusCommand($response);
+Console::StatusCommand($response);
 
 /*
 |--------------------------------------------------------------------------
@@ -42,5 +42,5 @@ $status = Console::StatusCommand($response);
 |
 */
 
-Console::TerminateCommand($status);
+$status = Console::TerminateCommand();
 exit($status);

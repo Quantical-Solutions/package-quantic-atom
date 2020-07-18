@@ -11,7 +11,7 @@ class Console
     private static string $subject;
     private static string $arg;
     private static int $control;
-    private static array $commands;
+    public static string $terminate;
 
     private static function ListenShellCommands($argv, $argc)
     {
@@ -46,12 +46,13 @@ class Console
 
     public static function StatusCommand($response)
     {
-        echo $response . PHP_EOL;
-        return 'Terminate';
+        $status = $response . PHP_EOL;
+        echo $status;
     }
 
-    public static function TerminateCommand($status)
+    public static function TerminateCommand()
     {
-        echo $status . PHP_EOL;
+        $end = self::$terminate . PHP_EOL;
+        return $end;
     }
 }
