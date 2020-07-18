@@ -4,7 +4,7 @@ namespace Quantic\Atom\Shell\Universes;
 
 class Expand
 {
-    public static function expand($force = false)
+    public static function Expand($force = false)
     {
         if ($force == true) {
 
@@ -16,7 +16,7 @@ class Expand
         }
     }
 
-    public static function rollback($step = false)
+    public static function Rollback($step = false)
     {
         if ($step != false) {
 
@@ -28,12 +28,12 @@ class Expand
         }
     }
 
-    public static function reset()
+    public static function Reset()
     {
 
     }
 
-    public static function refresh($seed = false)
+    public static function Refresh($seed = false)
     {
         if ($seed != false) {
 
@@ -45,7 +45,7 @@ class Expand
         }
     }
 
-    public static function fresh($seed = false)
+    public static function Fresh($seed = false)
     {
         if ($seed != false) {
 

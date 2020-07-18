@@ -174,7 +174,7 @@ class Singularities
                         'method' => ucwords($method),
                         'job' => ucwords(str_replace(':', '', $arg1)),
                         'argument' => '',
-                        'variable' => $arg2
+                        'variable' => trim($arg2)
                     ];
 
                 } else {
@@ -196,8 +196,8 @@ class Singularities
                     $mark = [
                         'method' => ucwords($method),
                         'job' => ucwords(str_replace(':', '', $arg1)),
-                        'argument' => $argument,
-                        'variable' => $var
+                        'argument' => trim($argument),
+                        'variable' => trim($var)
                     ];
 
                 } else if ($argument == ' --step=' && !is_numeric(trim($var))) {
@@ -209,8 +209,8 @@ class Singularities
                     $mark = [
                         'method' => ucwords($method),
                         'job' => ucwords(str_replace(':', '', $arg1)),
-                        'argument' => $argument,
-                        'variable' => $var
+                        'argument' => trim($argument),
+                        'variable' => trim($var)
                     ];
 
                 } else if ($argument == '') {
@@ -218,8 +218,8 @@ class Singularities
                     $mark = [
                         'method' => ucwords($method),
                         'job' => ucwords(str_replace(':', '', $arg1)),
-                        'argument' => $argument,
-                        'variable' => $var
+                        'argument' => trim($argument),
+                        'variable' => trim($var)
                     ];
                 }
             }
@@ -237,8 +237,8 @@ class Singularities
                     $mark = [
                         'method' => ucwords($method),
                         'job' => ucwords(str_replace(':', '', $arg1)),
-                        'argument' => $argument,
-                        'variable' => $var
+                        'argument' => trim($argument),
+                        'variable' => trim($var)
                     ];
 
                 } else if ($argument == ' --class=' && is_numeric(trim($var))) {
@@ -250,16 +250,16 @@ class Singularities
                     $mark = [
                         'method' => ucwords($method),
                         'job' => ucwords(str_replace(':', '', $arg1)),
-                        'argument' => $argument,
-                        'variable' => $var
+                        'argument' => trim($argument),
+                        'variable' => trim($var)
                     ];
                 } else if ($argument == '') {
 
                     $mark = [
                         'method' => ucwords($method),
                         'job' => ucwords(str_replace(':', '', $arg1)),
-                        'argument' => $argument,
-                        'variable' => $var
+                        'argument' => trim($argument),
+                        'variable' => trim($var)
                     ];
                 }
             }

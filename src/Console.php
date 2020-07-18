@@ -11,6 +11,7 @@ class Console
     private static string $subject;
     private static string $arg;
     private static int $control;
+    private static array $commands;
 
     private static function ListenShellCommands($argv, $argc)
     {
@@ -30,7 +31,7 @@ class Console
         ];
 
         $checkSyntax = Singularities::ScopeFixer($commands);
-        $translate = (!is_string($checkSyntax)) ? Expansion::StellarPlan($commands) : $checkSyntax;
+        $translate = (!is_string($checkSyntax)) ? Expansion::StellarPlan($checkSyntax) : $checkSyntax;
         return $translate;
     }
 
@@ -45,11 +46,12 @@ class Console
 
     public static function StatusCommand($response)
     {
-        echo 'Status' . PHP_EOL;
+        echo $response . PHP_EOL;
+        return 'Terminate';
     }
 
     public static function TerminateCommand($status)
     {
-        echo 'Terminate' . PHP_EOL;
+        echo $status . PHP_EOL;
     }
 }
