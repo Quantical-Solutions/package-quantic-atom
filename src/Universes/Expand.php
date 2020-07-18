@@ -3,59 +3,88 @@
 namespace Quantic\Atom\Shell\Universes;
 
 use Quantic\Atom\Shell\Console;
+use Wujunze\Colors;
 
 class Expand
 {
     public static function Expand($force = false)
     {
+        $colors = new \Wujunze\Colors();
+
         if ($force == true) {
 
-            Console::$terminate = 'test';
+            $result = (true) ? $colors->getColoredString('test', 'light_green', null) : $colors->getColoredString('test',
+            'red', null);
+            Console::$terminate = $result;
 
         } else {
 
-            Console::$terminate = 'test';
+            $result = (true) ? $colors->getColoredString('test', 'light_green', null) : $colors->getColoredString('test',
+            'red', null);
+            Console::$terminate = $result;
         }
     }
 
     public static function Rollback($step = false)
     {
+        $colors = new \Wujunze\Colors();
+
         if ($step != false) {
 
-            Console::$terminate = 'test';
+            $result = (true) ? $colors->getColoredString('test', 'light_green', null) : $colors->getColoredString('test',
+            'red', null);
+            Console::$terminate = $result;
 
         } else {
 
-            Console::$terminate = 'test';
+            $result = (true) ? $colors->getColoredString('test', 'light_green', null) : $colors->getColoredString('test',
+            'red', null);
+            Console::$terminate = $result;
         }
     }
 
     public static function Reset()
     {
-        Console::$terminate = 'test';
+        $colors = new \Wujunze\Colors();
+
+        $result = (true) ? $colors->getColoredString('test', 'light_green', null) : $colors->getColoredString('test',
+            'red', null);
+        Console::$terminate = $result;
     }
 
     public static function Refresh($seed = false)
     {
+        $colors = new \Wujunze\Colors();
+
         if ($seed != false) {
 
-            Console::$terminate = 'test';
+            $result = (true) ? $colors->getColoredString('test', 'light_green', null) : $colors->getColoredString('test',
+            'red', null);
+            Console::$terminate = $result;
 
         } else {
 
-            Console::$terminate = 'test';
+            $result = (true) ? $colors->getColoredString('test', 'light_green', null) : $colors->getColoredString('test',
+            'red', null);
+            Console::$terminate = $result;
         }
     }
 
     public static function Fresh($seed = false)
     {
+        $colors = new \Wujunze\Colors();
+
         if ($seed != false) {
 
-            Console::$terminate = 'test';
+            $result = (true) ? $colors->getColoredString('test', 'light_green', null) : $colors->getColoredString('test',
+            'red', null);
+            Console::$terminate = $result;
 
         } else {
 
-            Console::$terminate = 'test';
+            $result = (true) ? $colors->getColoredString('test', 'light_green', null) : $colors->getColoredString('test',
+            'red', null);
+            Console::$terminate = $result;
         }
     }
 }

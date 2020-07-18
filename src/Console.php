@@ -48,7 +48,7 @@ class Console
     public static function StatusCommand($response)
     {
         $status = $response . PHP_EOL;
-        echo -e $status;
+        echo $status;
     }
 
     public static function TerminateCommand()

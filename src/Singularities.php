@@ -1,6 +1,7 @@
 <?php
 
 namespace Quantic\Atom\Shell;
+use Wujunze\Colors;
 
 class Singularities
 {
@@ -40,16 +41,17 @@ class Singularities
         $subject = $data['subject'];
         $arg = $data['arg'];
         $control = $data['control'];
+        $colors = new \Wujunze\Colors();
 
         $createError = 'php atom create [:controller {string}] [:model {string}] [:migration {string}]';
         $modelError = 'php atom expand [ ] [:rollback [ ] [--step={int}]] [:reset] [:refresh [ ] [--seed]] [:fresh [ ] [--seed]]';
         $migrationError = 'php atom db [:seed [ ] [--class={string}] [--force]]';
 
-        $result = 'ERROR : This method doesn\'t exist !' . PHP_EOL
-            . 'Atom methods list :' . PHP_EOL . PHP_EOL
-            . '- ' . $createError . PHP_EOL
-            . '- ' . $modelError . PHP_EOL
-            . '- ' . $migrationError . PHP_EOL;
+        $result = $colors->getColoredString('ERROR : This method doesn\'t exist !', 'red', null) . PHP_EOL
+            . $colors->getColoredString('Atom methods list :', 'cyan', null) . PHP_EOL . PHP_EOL
+            . $colors->getColoredString('- ' . $createError, 'cyan', null) . PHP_EOL
+            . $colors->getColoredString('- ' . $modelError, 'cyan', null) . PHP_EOL
+            . $colors->getColoredString('- ' . $migrationError, 'cyan', null) . PHP_EOL;
 
         switch ($method) {
 
@@ -71,14 +73,18 @@ class Singularities
     private static function createControl($subject, $arg, $control, $errorMessage)
     {
         $reference = self::$constructors['create'];
-        $mark = 'ERROR : Bad create\'s function called or wrong syntax !' . PHP_EOL .  'You mean : ' . PHP_EOL .
-            $errorMessage . PHP_EOL;
+        $colors = new \Wujunze\Colors();
+
+        $mark = $colors->getColoredString('ERROR : Bad create\'s function called or wrong syntax !', 'red', null) .
+            PHP_EOL .  $colors->getColoredString('You mean : ', 'cyan', null) . PHP_EOL .
+            $colors->getColoredString($errorMessage, 'light_purple', null) . PHP_EOL;
 
         if ($subject !== false && $arg !== false) {
 
             if ($control < 3 || $control > 3) {
 
-                $mark = 'ERROR : CREATE method needs only 1 argument...' . PHP_EOL;
+                $mark = $colors->getColoredString('ERROR : CREATE method needs only 1 argument...', 'red', null) .
+                    PHP_EOL;
 
             } else {
 
@@ -92,14 +98,18 @@ class Singularities
     private static function expandControl($subject, $arg, $control, $errorMessage)
     {
         $reference = self::$constructors['expand'];
-        $mark = 'ERROR : Bad expand\'s function called or wrong syntax !' . PHP_EOL .  'You mean : ' . PHP_EOL .
-            $errorMessage . PHP_EOL;
+        $colors = new \Wujunze\Colors();
+
+        $mark = $colors->getColoredString('ERROR : Bad expand\'s function called or wrong syntax !', 'red', null) .
+            PHP_EOL . $colors->getColoredString( 'You mean : ', 'cyan', null) . PHP_EOL .
+            $colors->getColoredString($errorMessage, 'light_purple', null) . PHP_EOL;
 
         if ($subject !== false && $arg !== false) {
 
             if ($control < 2 || $control > 3) {
 
-                $mark = 'ERROR : EXPAND method needs at least 0 argument and at most 1...' . PHP_EOL;
+                $mark = $colors->getColoredString('ERROR : EXPAND method needs at least 0 argument and at most 1...',
+                        'red', null) . PHP_EOL;
 
             } else {
 
@@ -113,13 +123,18 @@ class Singularities
     private static function dbControl($subject, $arg, $control, $errorMessage)
     {
         $reference = self::$constructors['db'];
-        $mark = 'ERROR : Bad db\'s function called or wrong syntax !' . PHP_EOL . 'You mean : ' . PHP_EOL . $errorMessage . PHP_EOL;
+        $colors = new \Wujunze\Colors();
+
+        $mark = $colors->getColoredString('ERROR : Bad db\'s function called or wrong syntax !', 'red', null) .
+            PHP_EOL . $colors->getColoredString('You mean : ', 'cyan', null) . PHP_EOL . $colors->getColoredString
+            ($errorMessage, 'light_purple', null) . PHP_EOL;
 
         if ($subject !== false && $arg !== false) {
 
             if ($control < 2 || $control > 3) {
 
-                $mark = 'ERROR : DB method needs at least 0 argument, at most 1...' . PHP_EOL;
+                $mark = $colors->getColoredString('ERROR : DB method needs at least 0 argument, at most 1...', 'red',
+                        null) . PHP_EOL;
 
             } else {
 
@@ -132,6 +147,7 @@ class Singularities
 
     private static function formatControl($method, $reference, $subject, $arg, $control)
     {
+        $colors = new \Wujunze\Colors();
         $arg1 = ($subject != false) ? ':' . $subject : '';
         $arg2 = ($arg != false) ? ' ' . $arg : '';
 
@@ -140,25 +156,24 @@ class Singularities
             case 'create':
 
                 $missing = ($subject != false) ? $subject : $arg;
-                $mark = 'ERROR : The CREATE method\'s function "' . $missing . '" doesn\'t exist !' .
-                    PHP_EOL . 'CREATE functions list :' . PHP_EOL;
-                $mark .= '[:controller {string}] [:model {string}] [:migration {string}]' . PHP_EOL;
+                $mark = $colors->getColoredString('ERROR : The CREATE method\'s function "' . $missing . '" doesn\'t exist !', 'red', null) .  PHP_EOL . 'CREATE functions list :' . PHP_EOL;
+                $mark .= $colors->getColoredString('[:controller {string}] [:model {string}] [:migration {string}]', 'light_purple', null)
+                    . PHP_EOL;
                 break;
 
             case 'expand':
 
                 $missing = ($subject != false) ? $subject : $arg;
-                $mark = 'ERROR : The EXPAND method\'s function "' . $missing . '" doesn\'t exist !' .
-                    PHP_EOL . 'EXPAND functions list :' . PHP_EOL;
-                $mark .= '[ ] [:rollback [ ] [--step={int}]] [:reset] [:refresh [ ] [--seed]] [:fresh [ ] [--seed]]' . PHP_EOL;
+                $mark = $colors->getColoredString('ERROR : The EXPAND method\'s function "' . $missing . '" doesn\'t exist !', 'red', null) . PHP_EOL . $colors->getColoredString('EXPAND functions list :', 'cyan', null) . PHP_EOL;
+                $mark .= $colors->getColoredString('[ ] [:rollback [ ] [--step={int}]] [:reset] [:refresh [ ] [--seed]] [:fresh [ ] [--seed]]', 'light_purple', null) . PHP_EOL;
                 break;
 
             case 'db':
 
                 $missing = ($subject != false) ? $subject : $arg;
-                $mark = 'ERROR : The DB method\'s function "' . $missing . '" doesn\'t exist !' .
-                    PHP_EOL . 'DB functions list :' . PHP_EOL;
-                $mark .= '[:seed [ ] [--class={string}] [--force]]' . PHP_EOL;
+                $mark = $colors->getColoredString('ERROR : The DB method\'s function "' . $missing . '" doesn\'t exist !', 'red', null) .
+                    PHP_EOL . $colors->getColoredString('DB functions list :', 'cyan', null) . PHP_EOL;
+                $mark .= $colors->getColoredString('[:seed [ ] [--class={string}] [--force]]', 'light_purple', null) . PHP_EOL;
                 break;
         }
 
@@ -179,7 +194,7 @@ class Singularities
 
                 } else {
 
-                    $mark = 'ERROR : ' . strtoupper($method) . ' variable must be a "String" type.' . PHP_EOL;
+                    $mark = $colors->getColoredString('ERROR : ' . strtoupper($method) . ' variable must be a "String" type.', 'red', null) . PHP_EOL;
                 }
             }
 
@@ -202,7 +217,7 @@ class Singularities
 
                 } else if ($argument == ' --step=' && (!is_numeric(trim($var)) || $var == '')) {
 
-                    $mark = 'ERROR : ' . strtoupper($method) . ' variable must be a "Int" type.' . PHP_EOL;
+                    $mark = $colors->getColoredString('ERROR : ' . strtoupper($method) . ' variable must be a "Int" type.', 'red', null) . PHP_EOL;
 
                 } else if ($argument == ' --force' || $argument == ' --seed') {
 
@@ -243,7 +258,7 @@ class Singularities
 
                 } else if ($argument == ' --class=' && (is_numeric(trim($var)) || $var == '')) {
 
-                    $mark = 'ERROR : ' . strtoupper($method) . ' variable must be a "String" type.' . PHP_EOL;
+                    $mark = $colors->getColoredString('ERROR : ' . strtoupper($method) . ' variable must be a "String" type.', 'red', null) . PHP_EOL;
 
                 } else if ($argument == ' --force') {
 

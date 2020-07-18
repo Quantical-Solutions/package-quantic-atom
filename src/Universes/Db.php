@@ -3,22 +3,31 @@
 namespace Quantic\Atom\Shell\Universes;
 
 use Quantic\Atom\Shell\Console;
+use Wujunze\Colors;
 
 class Db
 {
     public static function Seed($class = false, $force = false)
     {
+        $colors = new \Wujunze\Colors();
+
         if ($class != false) {
 
-            Console::$terminate = 'test';
+            $result = (true) ? $colors->getColoredString('test', 'light_green', null) : $colors->getColoredString('test',
+                'red', null);
+            Console::$terminate = $result;
 
         } else if ($force == true) {
 
-            Console::$terminate = 'test';
+            $result = (true) ? $colors->getColoredString('test', 'light_green', null) : $colors->getColoredString('test',
+                'red', null);
+            Console::$terminate = $result;
 
         } else {
 
-            Console::$terminate = 'test';
+            $result = (true) ? $colors->getColoredString('test', 'light_green', null) : $colors->getColoredString('test',
+                'red', null);
+            Console::$terminate = $result;
         }
     }
 }

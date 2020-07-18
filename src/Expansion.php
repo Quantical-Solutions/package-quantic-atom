@@ -5,6 +5,7 @@ namespace Quantic\Atom\Shell;
 use Quantic\Atom\Shell\Universes\Create;
 use Quantic\Atom\Shell\Universes\Expand;
 use Quantic\Atom\Shell\Universes\Db;
+use Wujunze\Colors;
 
 class Expansion
 {
@@ -14,6 +15,7 @@ class Expansion
         $arg = $commands['argument'];
         $var = $commands['variable'];
         $todo = false;
+        $colors = new \Wujunze\Colors();
         //echo json_encode($commands) . PHP_EOL;
 
         switch ($commands['method']) {
@@ -94,6 +96,6 @@ class Expansion
                 break;
         }
 
-        return $todo;
+        return $colors->getColoredString($todo, 'yellow', 'transparent');
     }
 }
