@@ -13,14 +13,14 @@ class Expand
 
         if ($force == true) {
 
-            $result = (true) ? $colors->getColoredString('test', 'light_green', null) : $colors->getColoredString('test',
-            'red', null);
+            $result = (true) ? $colors->getColoredString('>>> test', 'light_green', null) : $colors->getColoredString
+            ('>>> test', 'red', null);
             Console::$terminate = $result;
 
         } else {
 
-            $result = (true) ? $colors->getColoredString('test', 'light_green', null) : $colors->getColoredString('test',
-            'red', null);
+            $result = (true) ? $colors->getColoredString('>>> test', 'light_green', null) : $colors->getColoredString
+            ('>>> test', 'red', null);
             Console::$terminate = $result;
         }
     }
@@ -31,14 +31,14 @@ class Expand
 
         if ($step != false) {
 
-            $result = (true) ? $colors->getColoredString('test', 'light_green', null) : $colors->getColoredString('test',
-            'red', null);
+            $result = (true) ? $colors->getColoredString('>>> test', 'light_green', null) : $colors->getColoredString
+            ('>>> test', 'red', null);
             Console::$terminate = $result;
 
         } else {
 
-            $result = (true) ? $colors->getColoredString('test', 'light_green', null) : $colors->getColoredString('test',
-            'red', null);
+            $result = (true) ? $colors->getColoredString('>>> test', 'light_green', null) : $colors->getColoredString
+            ('>>> test', 'red', null);
             Console::$terminate = $result;
         }
     }
@@ -47,7 +47,7 @@ class Expand
     {
         $colors = new \Wujunze\Colors();
 
-        $result = (true) ? $colors->getColoredString('test', 'light_green', null) : $colors->getColoredString('test',
+        $result = (true) ? $colors->getColoredString('>>> test', 'light_green', null) : $colors->getColoredString('>>> test',
             'red', null);
         Console::$terminate = $result;
     }
@@ -58,14 +58,14 @@ class Expand
 
         if ($seed != false) {
 
-            $result = (true) ? $colors->getColoredString('test', 'light_green', null) : $colors->getColoredString('test',
-            'red', null);
+            $result = (true) ? $colors->getColoredString('>>> test', 'light_green', null) : $colors->getColoredString
+            ('>>> test', 'red', null);
             Console::$terminate = $result;
 
         } else {
 
-            $result = (true) ? $colors->getColoredString('test', 'light_green', null) : $colors->getColoredString('test',
-            'red', null);
+            $result = (true) ? $colors->getColoredString('>>> test', 'light_green', null) : $colors->getColoredString
+            ('>>> test', 'red', null);
             Console::$terminate = $result;
         }
     }
@@ -76,14 +76,14 @@ class Expand
 
         if ($seed != false) {
 
-            $result = (true) ? $colors->getColoredString('test', 'light_green', null) : $colors->getColoredString('test',
-            'red', null);
+            $result = (true) ? $colors->getColoredString('>>> test', 'light_green', null) : $colors->getColoredString
+            ('>>> test', 'red', null);
             Console::$terminate = $result;
 
         } else {
 
-            $result = (true) ? $colors->getColoredString('test', 'light_green', null) : $colors->getColoredString('test',
-            'red', null);
+            $result = (true) ? $colors->getColoredString('>>> test', 'light_green', null) : $colors->getColoredString
+            ('>>> test', 'red', null);
             Console::$terminate = $result;
         }
     }

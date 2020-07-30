@@ -47,13 +47,14 @@ class Console
 
     public static function StatusCommand($response)
     {
-        $status = $response . PHP_EOL;
-        echo $status;
+        if (is_string($response) && $response != '') {
+            echo $response;
+        }
     }
 
     public static function TerminateCommand()
     {
-        $end = self::$terminate . PHP_EOL;
+        $end = (self::$terminate == '') ? null : self::$terminate . PHP_EOL;
         return $end;
     }
 }

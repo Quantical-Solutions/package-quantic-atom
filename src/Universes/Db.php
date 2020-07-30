@@ -13,20 +13,20 @@ class Db
 
         if ($class != false) {
 
-            $result = (true) ? $colors->getColoredString('test', 'light_green', null) : $colors->getColoredString('test',
-                'red', null);
+            $result = (true) ? $colors->getColoredString('>>> test', 'light_green', null) : $colors->getColoredString
+            ('>>> test', 'red', null);
             Console::$terminate = $result;
 
         } else if ($force == true) {
 
-            $result = (true) ? $colors->getColoredString('test', 'light_green', null) : $colors->getColoredString('test',
-                'red', null);
+            $result = (true) ? $colors->getColoredString('>>> test', 'light_green', null) : $colors->getColoredString
+            ('>>> test', 'red', null);
             Console::$terminate = $result;
 
         } else {
 
-            $result = (true) ? $colors->getColoredString('test', 'light_green', null) : $colors->getColoredString('test',
-                'red', null);
+            $result = (true) ? $colors->getColoredString('>>> test', 'light_green', null) : $colors->getColoredString
+            ('>>> test', 'red', null);
             Console::$terminate = $result;
         }
     }

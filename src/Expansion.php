@@ -5,6 +5,7 @@ namespace Quantic\Atom\Shell;
 use Quantic\Atom\Shell\Universes\Create;
 use Quantic\Atom\Shell\Universes\Expand;
 use Quantic\Atom\Shell\Universes\Db;
+use Quantic\Atom\Shell\Universes\Concrete;
 use Wujunze\Colors;
 
 class Expansion
@@ -16,7 +17,6 @@ class Expansion
         $var = $commands['variable'];
         $todo = false;
         $colors = new \Wujunze\Colors();
-        //echo json_encode($commands) . PHP_EOL;
 
         switch ($commands['method']) {
 
@@ -36,6 +36,20 @@ class Expansion
 
                     Create::Migration($var);
                     $todo = '>>> Processing to create "' . ucwords($var) . '" migration file...';
+                }
+                break;
+
+            case 'Concrete':
+
+                if ($job == 'Build') {
+
+                    Concrete::Build($var);
+                    $todo = '>>> Processing to build "' . ucwords($var) . '".jsx file...';
+
+                } else if ($job == 'Update') {
+
+                    Concrete::Update($var);
+                    $todo = '>>> Processing to update "' . ucwords($var) . '".jsx file...';
                 }
                 break;
 
@@ -96,6 +110,6 @@ class Expansion
                 break;
         }
 
-        return $colors->getColoredString($todo, 'yellow', 'transparent');
+        return $colors->getColoredString($todo, 'yellow', 'transparent') . PHP_EOL;
     }
 }

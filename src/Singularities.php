@@ -14,6 +14,12 @@ class Singularities
             'create:migration' // Create Migration file | {string}
         ],
 
+        // JSX builder
+        'concrete' => [
+            'concrete:build', // Create JSX file | {string}
+            'concrete:update', // Update JSX file | {string}
+        ],
+
         // DB migration
         'expand' => [
             'expand', // Migrate all with "if not exist"
@@ -44,6 +50,7 @@ class Singularities
         $colors = new \Wujunze\Colors();
 
         $createError = 'php atom create [:controller {string}] [:model {string}] [:migration {string}]';
+        $concreteError = 'php atom concrete [:build {string}] [:update {string}]';
         $modelError = 'php atom expand [ ] [:rollback [ ] [--step={int}]] [:reset] [:refresh [ ] [--seed]] [:fresh [ ] [--seed]]';
         $migrationError = 'php atom db [:seed [ ] [--class={string}] [--force]]';
 
@@ -57,6 +64,10 @@ class Singularities
 
             case 'create':
                 $result = self::createControl($subject, $arg, $control, $createError);
+                break;
+
+            case 'concrete':
+                $result = self::concreteControl($subject, $arg, $control, $concreteError);
                 break;
 
             case 'expand':
@@ -89,6 +100,31 @@ class Singularities
             } else {
 
                 $mark = self::formatControl('create', $reference, $subject, $arg, $control);
+            }
+        }
+
+        return $mark;
+    }
+
+    private static function concreteControl($subject, $arg, $control, $errorMessage)
+    {
+        $reference = self::$constructors['concrete'];
+        $colors = new \Wujunze\Colors();
+
+        $mark = $colors->getColoredString('ERROR : Bad concrete\'s function called or wrong syntax !', 'red', null) .
+            PHP_EOL .  $colors->getColoredString('You mean : ', 'cyan', null) . PHP_EOL .
+            $colors->getColoredString($errorMessage, 'light_purple', null) . PHP_EOL;
+
+        if ($subject !== false && $arg !== false) {
+
+            if ($control < 3 || $control > 3) {
+
+                $mark = $colors->getColoredString('ERROR : CONCRETE method needs only 1 argument...', 'red', null) .
+                    PHP_EOL;
+
+            } else {
+
+                $mark = self::formatControl('concrete', $reference, $subject, $arg, $control);
             }
         }
 
@@ -161,6 +197,14 @@ class Singularities
                     . PHP_EOL;
                 break;
 
+            case 'concrete':
+
+                $missing = ($subject != false) ? $subject : $arg;
+                $mark = $colors->getColoredString('ERROR : The CONCRETE method\'s function "' . $missing . '" doesn\'t exist !', 'red', null) .  PHP_EOL . 'CONCRETE functions list :' . PHP_EOL;
+                $mark .= $colors->getColoredString('[:build {string}] [:update {string}]', 'light_purple', null)
+                    . PHP_EOL;
+                break;
+
             case 'expand':
 
                 $missing = ($subject != false) ? $subject : $arg;
@@ -198,7 +242,28 @@ class Singularities
                 }
             }
 
-        } else if ($method == 'expand') {
+        } else if ($method == 'concrete') {
+
+        $verbose = $method . $arg1;
+
+        if (in_array($verbose, $reference)) {
+
+            if (!is_numeric(trim($arg2))) {
+
+                $mark = [
+                    'method' => ucwords($method),
+                    'job' => ucwords(str_replace(':', '', $arg1)),
+                    'argument' => '',
+                    'variable' => trim($arg2)
+                ];
+
+            } else {
+
+                $mark = $colors->getColoredString('ERROR : ' . strtoupper($method) . ' variable must be a "String" type.', 'red', null) . PHP_EOL;
+            }
+        }
+
+    } else if ($method == 'expand') {
 
             $argument = (count(explode('=', $arg2)) == 2) ? explode('=', $arg2)[0] . '=' : $arg2;
             $var = (isset(explode('=', $arg2)[1])) ? explode('=', $arg2)[1] : '';
