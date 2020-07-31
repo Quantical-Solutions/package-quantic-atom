@@ -55,10 +55,10 @@ class Singularities
         $migrationError = 'php atom db [:seed [ ] [--class={string}] [--force]]';
 
         $result = $colors->getColoredString('ERROR : This method doesn\'t exist !', 'red', null) . PHP_EOL
-            . $colors->getColoredString('Atom methods list :', 'cyan', null) . PHP_EOL . PHP_EOL
-            . $colors->getColoredString('- ' . $createError, 'cyan', null) . PHP_EOL
-            . $colors->getColoredString('- ' . $modelError, 'cyan', null) . PHP_EOL
-            . $colors->getColoredString('- ' . $migrationError, 'cyan', null) . PHP_EOL;
+            . $colors->getColoredString('Atom methods list :', 'yellow', null) . PHP_EOL . PHP_EOL
+            . $colors->getColoredString('- ' . $createError, 'yellow', null) . PHP_EOL
+            . $colors->getColoredString('- ' . $modelError, 'yellow', null) . PHP_EOL
+            . $colors->getColoredString('- ' . $migrationError, 'yellow', null) . PHP_EOL;
 
         switch ($method) {
 
@@ -87,7 +87,7 @@ class Singularities
         $colors = new \Wujunze\Colors();
 
         $mark = $colors->getColoredString('ERROR : Bad create\'s function called or wrong syntax !', 'red', null) .
-            PHP_EOL .  $colors->getColoredString('You mean : ', 'cyan', null) . PHP_EOL .
+            PHP_EOL .  $colors->getColoredString('You mean : ', 'yellow', null) . PHP_EOL .
             $colors->getColoredString($errorMessage, 'light_purple', null) . PHP_EOL;
 
         if ($subject !== false && $arg !== false) {
@@ -112,7 +112,7 @@ class Singularities
         $colors = new \Wujunze\Colors();
 
         $mark = $colors->getColoredString('ERROR : Bad concrete\'s function called or wrong syntax !', 'red', null) .
-            PHP_EOL .  $colors->getColoredString('You mean : ', 'cyan', null) . PHP_EOL .
+            PHP_EOL .  $colors->getColoredString('You mean : ', 'yellow', null) . PHP_EOL .
             $colors->getColoredString($errorMessage, 'light_purple', null) . PHP_EOL;
 
         if ($subject !== false && $arg !== false) {
@@ -137,7 +137,7 @@ class Singularities
         $colors = new \Wujunze\Colors();
 
         $mark = $colors->getColoredString('ERROR : Bad expand\'s function called or wrong syntax !', 'red', null) .
-            PHP_EOL . $colors->getColoredString( 'You mean : ', 'cyan', null) . PHP_EOL .
+            PHP_EOL . $colors->getColoredString( 'You mean : ', 'yellow', null) . PHP_EOL .
             $colors->getColoredString($errorMessage, 'light_purple', null) . PHP_EOL;
 
         if ($subject !== false && $arg !== false) {
@@ -162,7 +162,7 @@ class Singularities
         $colors = new \Wujunze\Colors();
 
         $mark = $colors->getColoredString('ERROR : Bad db\'s function called or wrong syntax !', 'red', null) .
-            PHP_EOL . $colors->getColoredString('You mean : ', 'cyan', null) . PHP_EOL . $colors->getColoredString
+            PHP_EOL . $colors->getColoredString('You mean : ', 'yellow', null) . PHP_EOL . $colors->getColoredString
             ($errorMessage, 'light_purple', null) . PHP_EOL;
 
         if ($subject !== false && $arg !== false) {
@@ -192,7 +192,7 @@ class Singularities
             case 'create':
 
                 $missing = ($subject != false) ? $subject : $arg;
-                $mark = $colors->getColoredString('ERROR : The CREATE method\'s function "' . $missing . '" doesn\'t exist !', 'red', null) .  PHP_EOL . 'CREATE functions list :' . PHP_EOL;
+                $mark = $colors->getColoredString('ERROR : The CREATE method\'s function "' . $missing . '" doesn\'t exist !', 'red', null) .  PHP_EOL . $colors->getColoredString('CREATE functions list :', 'yellow', null) . PHP_EOL;
                 $mark .= $colors->getColoredString('[:controller {string}] [:model {string}] [:migration {string}]', 'light_purple', null)
                     . PHP_EOL;
                 break;
@@ -200,7 +200,7 @@ class Singularities
             case 'concrete':
 
                 $missing = ($subject != false) ? $subject : $arg;
-                $mark = $colors->getColoredString('ERROR : The CONCRETE method\'s function "' . $missing . '" doesn\'t exist !', 'red', null) .  PHP_EOL . 'CONCRETE functions list :' . PHP_EOL;
+                $mark = $colors->getColoredString('ERROR : The CONCRETE method\'s function "' . $missing . '" doesn\'t exist !', 'red', null) .  PHP_EOL . $colors->getColoredString('CONCRETE functions list :', 'yellow', null) . PHP_EOL;
                 $mark .= $colors->getColoredString('[:build {string}] [:update {string}]', 'light_purple', null)
                     . PHP_EOL;
                 break;
@@ -208,7 +208,7 @@ class Singularities
             case 'expand':
 
                 $missing = ($subject != false) ? $subject : $arg;
-                $mark = $colors->getColoredString('ERROR : The EXPAND method\'s function "' . $missing . '" doesn\'t exist !', 'red', null) . PHP_EOL . $colors->getColoredString('EXPAND functions list :', 'cyan', null) . PHP_EOL;
+                $mark = $colors->getColoredString('ERROR : The EXPAND method\'s function "' . $missing . '" doesn\'t exist !', 'red', null) . PHP_EOL . $colors->getColoredString('EXPAND functions list :', 'yellow', null) . PHP_EOL;
                 $mark .= $colors->getColoredString('[ ] [:rollback [ ] [--step={int}]] [:reset] [:refresh [ ] [--seed]] [:fresh [ ] [--seed]]', 'light_purple', null) . PHP_EOL;
                 break;
 
@@ -216,7 +216,7 @@ class Singularities
 
                 $missing = ($subject != false) ? $subject : $arg;
                 $mark = $colors->getColoredString('ERROR : The DB method\'s function "' . $missing . '" doesn\'t exist !', 'red', null) .
-                    PHP_EOL . $colors->getColoredString('DB functions list :', 'cyan', null) . PHP_EOL;
+                    PHP_EOL . $colors->getColoredString('DB functions list :', 'yellow', null) . PHP_EOL;
                 $mark .= $colors->getColoredString('[:seed [ ] [--class={string}] [--force]]', 'light_purple', null) . PHP_EOL;
                 break;
         }
