@@ -24,18 +24,24 @@ class Expansion
 
                 if ($job == 'Controller') {
 
+                    $todo = $colors->getColoredString('>>> Processing to create "' . $var . '" controller file...', 'yellow', 'transparent');
                     Create::Controller($var);
-                    $todo = '>>> Processing to create "' . ucwords($var) . '" controller file...';
 
                 } else if ($job == 'Model') {
 
+                    $todo = $colors->getColoredString('>>> Processing to create "' . $var . '" model file...', 'yellow', 'transparent');
                     Create::Model($var);
-                    $todo = '>>> Processing to create "' . ucwords($var) . '" model file...';
 
                 } else if ($job == 'Migration') {
 
-                    Create::Migration($var);
-                    $todo = '>>> Processing to create "' . ucwords($var) . '" migration file...';
+                    $file = strtolower(date("Ymd_His_") . $var);
+                    if (self::ControlModelFormat(strtolower($var))) {
+                        $todo = $colors->getColoredString('>>> Processing to create "' . $file . '" migration file...',
+                            'yellow', 'transparent');
+                        Create::Migration($file);
+                    } else {
+                        $todo = $colors->getColoredString('>>> Failed to create "' . $file . '" migration file because of wrong string format...', 'red', 'transparent');
+                    }
                 }
                 break;
 
@@ -43,13 +49,21 @@ class Expansion
 
                 if ($job == 'Build') {
 
-                    Concrete::Build($var);
-                    $todo = '>>> Processing to build "' . ucwords($var) . '".jsx file...';
+                    if (self::controlViewExistence($var, 'build')) {
+                        $todo = $colors->getColoredString('>>> Processing to build "' . $var . '.jsx" file...', 'yellow', 'transparent');
+                        Concrete::Build($var);
+                    } else {
+                        $todo = $colors->getColoredString('>>> ERROR : file "' . $var . '.blade.php" doesn\'t exist...', 'red', 'transparent');
+                    }
 
                 } else if ($job == 'Update') {
 
-                    Concrete::Update($var);
-                    $todo = '>>> Processing to update "' . ucwords($var) . '".jsx file...';
+                    if (self::controlViewExistence($var, 'update')) {
+                        $todo = $colors->getColoredString('>>> Processing to update "' . $var . '.jsx" file...', 'yellow', 'transparent');
+                        Concrete::Update($var);
+                    } else {
+                        $todo = $colors->getColoredString('>>> ERROR : file "' . $var . '.blade.php" and/or "' . $var . '.jsx" doesn\'t exist...', 'red', 'transparent');
+                    }
                 }
                 break;
 
@@ -59,34 +73,34 @@ class Expansion
 
                     $argu = ($arg == '') ? false : $arg;
                     $forced = ($arg == '--force') ? 'forced' : '';
+                    $todo = $colors->getColoredString('>>> Processing ' . $forced . ' expansion...', 'yellow', 'transparent');
                     Expand::Expand($argu);
-                    $todo = '>>> Processing ' . $forced . ' expansion...';
 
                 } else if ($job == 'Rollback') {
 
                     $argu = ($var == '') ? false : $var;
                     $step = ($var == '') ? '' : ' ' . $var . ' step(s) forward';
+                    $todo = $colors->getColoredString('>>> Processing rolling back' . $step . ' expansion...', 'yellow', 'transparent');
                     Expand::Rollback($argu);
-                    $todo = '>>> Processing rolling back' . $step . ' expansion...';
 
                 } else if ($job == 'Reset') {
 
+                    $todo = $colors->getColoredString('>>> Processing resting expansion...', 'yellow', 'transparent');
                     Expand::Reset();
-                    $todo = '>>> Processing resting expansion...';
 
                 } else if ($job == 'Refresh') {
 
                     $argu = ($arg == '') ? false : $arg;
                     $seed = ($arg == '') ? '' : ' and seed';
+                    $todo = $colors->getColoredString('>>> Processing refreshing expansion' . $seed . '...', 'yellow', 'transparent');
                     Expand::Refresh($argu);
-                    $todo = '>>> Processing refreshing expansion' . $seed . '...';
 
                 } else if ($job == 'Fresh') {
 
                     $argu = ($arg == '') ? false : $arg;
                     $seed = ($arg == '') ? '' : ' and seed';
+                    $todo = $colors->getColoredString('>>> Processing freshing expansion' . $seed . '...', 'yellow', 'transparent');
                     Expand::Fresh($argu);
-                    $todo = '>>> Processing freshing expansion' . $seed . '...';
                 }
                 break;
 
@@ -94,22 +108,61 @@ class Expansion
 
                 if ($job == 'Seed' && $arg == '') {
 
+                    $todo = $colors->getColoredString('>>> Seeding in progress...', 'yellow', 'transparent');
                     Db::Seed(false, false);
-                    $todo = '>>> Seeding in progress...';
 
                 } else if ($job == 'Seed' && $arg == '--class=' && $var!= '') {
 
+                    $todo = $colors->getColoredString('>>> Seeding class "' . $var . '" in progress...', 'yellow', 'transparent');
                     Db::Seed($var, false);
-                    $todo = '>>> Seeding class "' . ucwords($var) . '" in progress...';
 
                 } else if ($job == 'Seed' && $arg == '--force') {
 
+                    $todo = $colors->getColoredString('>>> Forced seeding in progress...', 'yellow', 'transparent');
                     Db::Seed(false, true);
-                    $todo = '>>> Forced seeding in progress...';
                 }
                 break;
         }
 
-        return $colors->getColoredString($todo, 'yellow', 'transparent') . PHP_EOL;
+        return $todo . PHP_EOL;
+    }
+
+    public static function ControlModelFormat($var)
+    {
+        $response = false;
+        $explode = explode('_', $var);
+
+        if (substr($var, 0, 7) == 'create_') {
+            if ($explode[count($explode)-1] == 'table') {
+                $response = true;
+            }
+        } else if (substr($var, 0, 12) == 'add_columns_') {
+            if ($explode[count($explode)-2] == 'to') {
+                $response = true;
+            }
+        }
+        return $response;
+    }
+
+    public static function controlViewExistence($var, $type)
+    {
+        $response = false;
+        $views = ROOTDIR . '/resources/views/';
+        $jsx = ROOTDIR . '/app/React/';
+
+        if ($type == 'build') {
+
+            if (file_exists($views . $var . '.blade.php') && !file_exists($jsx . $var . '.jsx')) {
+                $response = true;
+            }
+
+        } else if ($type == 'update') {
+
+            if (file_exists($views . $var . '.blade.php') && file_exists($jsx . $var . '.jsx')) {
+                $response = true;
+            }
+        }
+
+        return $response;
     }
 }

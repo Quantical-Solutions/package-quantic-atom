@@ -1,6 +1,7 @@
 <?php
 
 namespace Quantic\Atom\Shell;
+
 use Wujunze\Colors;
 
 class Singularities
